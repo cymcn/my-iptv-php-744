@@ -40,6 +40,5 @@ $json = json_decode($data);
 
 $playurl = "https://hlslive.1905.com/live/$n[$id]/index.m3u8".$json->data->sign->hd->sign;
 header("Content-Type: application/vnd.apple.mpegURL");
-header('location:'.$playurl);
-echo $playurl;
+header('Location: '.$playurl);
 ?>
