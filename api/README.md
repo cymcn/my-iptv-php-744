@@ -19,7 +19,7 @@ docker cp /你的本地PHP文件地址/xxx.php php-env:/var/www/html/
 http://你的IP:5678/xxx.php?id=xxx&xx=xxx...
 
 
-### **Y-T访问地址：**
+YT访问地址：
 
 深圳旁边资讯台1080P,http://.php?id=dmDg7NfUoSw
 深圳旁边资讯台720P,http://.php?id=dmDg7NfUoSw&q=720
