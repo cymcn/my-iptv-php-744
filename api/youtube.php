@@ -1,9 +1,8 @@
-±¾ÌûÒþ²ØµÄÄÚÈÝ
 <?php
-// »ñÈ¡ URL ÖÐµÄ id ºÍ q ²ÎÊý£¬Èç¹û²»´æÔÚÔòÉèÖÃÄ¬ÈÏÖµ
+// èŽ·å– URL ä¸­çš„ id å’Œ q å‚æ•°ï¼Œå¦‚æžœä¸å­˜åœ¨åˆ™è®¾ç½®é»˜è®¤å€¼
 $id = $_GET["id"] ?? "9sE12tg3CmA";
 $quality = $_GET["q"] ?? "hd";
-// ¶¨ÒåÒ»¸öº¯Êý£¬ÓÃÓÚ»ñÈ¡Ö¸¶¨ URL µÄ HTML ÄÚÈÝ
+// å®šä¹‰ä¸€ä¸ªå‡½æ•°ï¼Œç”¨äºŽèŽ·å–æŒ‡å®š URL çš„ HTML å†…å®¹
 function get_data($url){
 $ch = curl_init();
 $timeout = 5;
@@ -17,20 +16,20 @@ $data = curl_exec($ch);
 curl_close($ch);
 return $data;
 }
-// »ñÈ¡ YouTube ÊÓÆµµÄ HTML ÄÚÈÝ
+// èŽ·å– YouTube è§†é¢‘çš„ HTML å†…å®¹
 $string = get_data('https://www.youtube.com/watch?v=' . $id);
-// ´Ó HTML ÄÚÈÝÖÐÌáÈ¡ M3U8 ÎÄ¼þµÄÁ´½Ó
+// ä»Ž HTML å†…å®¹ä¸­æå– M3U8 æ–‡ä»¶çš„é“¾æŽ¥
 preg_match_all('/hlsManifestUrl(.*m3u8)/', $string, $matches, PREG_PATTERN_ORDER);
 $rawURL = str_replace("\/", "/", substr($matches[1][0], 3));
-// ¸ù¾ÝÊÓÆµÖÊÁ¿²ÎÊýÖµÉèÖÃ²»Í¬µÄÕýÔò±í´ïÊ½£¬ÒÔÆ¥ÅäÏàÓ¦µÄ M3U8 ²¥·ÅÁ´½Ó
+// æ ¹æ®è§†é¢‘è´¨é‡å‚æ•°å€¼è®¾ç½®ä¸åŒçš„æ­£åˆ™è¡¨è¾¾å¼ï¼Œä»¥åŒ¹é…ç›¸åº”çš„ M3U8 æ’­æ”¾é“¾æŽ¥
 $quality_regex = match ($quality) {
 '720' => '/(https:\/.*\/95\/.*index.m3u8)/',
 '480' => '/(https:\/.*\/94\/.*index.m3u8)/',
 'hd' => '/(https:\/.*\/96\/.*index.m3u8)/',
 };
-// »ñÈ¡ÊÓÆµ²¥·ÅÁ´½Ó
+// èŽ·å–è§†é¢‘æ’­æ”¾é“¾æŽ¥
 preg_match_all($quality_regex, get_data($rawURL), $playURL, PREG_PATTERN_ORDER);
-// ÉèÖÃÕýÈ·µÄ HTTP ÏìÓ¦Í·£¬½«²¥·ÅÁ´½Ó·¢ËÍ¸ø¿Í»§¶Ë
+// è®¾ç½®æ­£ç¡®çš„ HTTP å“åº”å¤´ï¼Œå°†æ’­æ”¾é“¾æŽ¥å‘é€ç»™å®¢æˆ·ç«¯
 header("Content-type: application/vnd.apple.mpegurl");
 header("Location: " . $playURL[1][0]);
 ?>
