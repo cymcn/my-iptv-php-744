@@ -17,5 +17,13 @@ docker cp /你的本地PHP文件地址/xxx.php php-env:/var/www/html/
 ### **访问地址：**
 ```
 http://你的IP:5678/xxx.php?id=xxx&xx=xxx...
+
+
+### **Y-T访问地址：**
+
+深圳旁边资讯台1080P,http://.php?id=dmDg7NfUoSw
+深圳旁边资讯台720P,http://.php?id=dmDg7NfUoSw&q=720
+深圳旁边资讯台480P,http://.php?id=dmDg7NfUoSw&q=480
+
 ```
 ### 小白可以直接参考视频教程∶[点击观看](https://v1.mk/php)
