@@ -13,7 +13,12 @@ $ipArray = [
     'dbiptv.sn.chinamobile.com',
 ];
 $ip = $ipArray[array_rand($ipArray)];
-$playurl = "http://{$ip}/PLTV/88888893/224/{$n[$id]}/index.m3u8";
-$playurl2 = "http://{$ip}/PLTV/88888890/224/{$n[$id]}/index.m3u8"; // 新增的播放地址
+
+if ($id === 'cctv1' || $id === 'cctv2' || $id === 'cctv3') {
+    $playurl = "http://{$ip}/PLTV/88888890/224/{$n[$id]}/index.m3u8";
+} else {
+    $playurl = "http://{$ip}/PLTV/88888893/224/{$n[$id]}/index.m3u8";
+}
+
 header('Location: ' . $playurl);
 exit;
