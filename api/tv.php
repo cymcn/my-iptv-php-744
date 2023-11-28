@@ -21,7 +21,7 @@ $n = [
     'cctv13' => '3221225748', // CCTV13
     'cctv14' => '3221225727', // CCTV14
     'cctv15' => '3221225749', // CCTV15
-    'cctv16' => '3221226302', // CCTV16
+    'cctv16' => '3221226921', // CCTV16
     'cctv17' => '3221226027', // CCTV17
     'sjdl' => '3221226071', // CCTV世界地理
     'bqkj' => '3221226111', // CCTV兵器科技
@@ -153,82 +153,15 @@ $n = [
     'ctds' => '3221226101', // 成铁电视
 ];
 $ipArray = [
-    '39.136.17.114',
-    '39.136.17.115',
-    '39.136.17.116',
-    '39.136.17.117',
-    '39.136.17.118',
-    '39.136.17.119',
+    '39.136.17.82',
+    '39.136.17.83',
+    '39.136.17.84',
+    '39.136.17.85',
+    '39.136.17.86',
+    '39.136.17.87',
+    '39.136.17.88',
 ];
-
 $ip = $ipArray[array_rand($ipArray)];
-$cacheFileName = 'gzyd_cache_all.json'; // Cache file name for all URLs
-$cacheDuration = 43200; // Cache duration in seconds (12 hour)
-
-// Initialize an empty array to store cached URLs
-$cachedUrls = [];
-
-// Check if the cache file exists and isn't expired
-// if (file_exists($cacheFileName)) {
-//     // Read the cached URLs from the file
-//     $cachedUrls = json_decode(file_get_contents($cacheFileName), true);
-// }
-// Check if the cache file exists and isn't expired
-if (file_exists($cacheFileName)) {
-    // Read the cached URLs from the file
-    $cachedUrls = json_decode(file_get_contents($cacheFileName), true);
-
-    // Check and remove expired cached URLs
-    foreach ($cachedUrls as $cachedId => $cachedData) {
-        $timestampDiff = time() - $cachedData['timestamp'];
-        if ($timestampDiff >= $cacheDuration) {
-            // Remove expired cached URL
-            unset($cachedUrls[$cachedId]);
-        }
-    }
-
-    // Write updated cache data back to the file
-    file_put_contents($cacheFileName, json_encode($cachedUrls));
-}
-// Check if the URL for the current 'id' is already cached and within the duration
-if (isset($cachedUrls[$id]) && time() - $cachedUrls[$id]['timestamp'] < $cacheDuration) {
-    // Use cached URL for the current 'id'
-    $finalUrl = $cachedUrls[$id]['url'];
-} else {
-    $playurl = "http://{$ip}/cdnrrs.gz.chinamobile.com/PLTV/88888888/224/{$n[$id]}/1/index.m3u8?fmt=ts2hls";
-    //echo $playurl;
-    // Initialize cURL session
-    $ch = curl_init();
-
-    // Set cURL options
-    curl_setopt($ch, CURLOPT_URL, $playurl);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Follow redirects
-    curl_setopt($ch, CURLOPT_TIMEOUT, 0); // 设置超时时间
-    // Execute cURL session and capture the final URL
-    curl_exec($ch);
-
-    // Get the final URL after following redirects
-    $finalUrl = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
-    // Get the HTTP status code
-    $httpStatusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    // Close cURL session
-    curl_close($ch);
-    if ($httpStatusCode !== 403) {
-        // Cache the final URL for the current 'id'
-        $cachedUrls[$id] = [
-            'url' => $finalUrl,
-            'timestamp' => time()
-        ];
-
-        // Store all cached URLs in the cache file
-        file_put_contents($cacheFileName, json_encode($cachedUrls));
-    } else {
-        // Use the default URL or handle the 403 case as needed
-        $finalUrl = 'https://angtv.cc';
-    }
-}
-header("Content-Type: application/vnd.apple.mpegurl");
-header('location:' . $finalUrl);
-//header ('location:'.$playurl);
+$playurl = "http://{$ip}/cdnrrs.gz.chinamobile.com/PLTV/88888888/224/{$n[$id]}/1/index.m3u8?fmt=ts2hls";
+header('location:' . $playurl);
 exit;
