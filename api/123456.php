@@ -34,13 +34,21 @@ $header=array(
   'User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 15_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/98.0.4758.85 Mobile/15E148 Safari/604.1',
   'token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJlZGM5MTlhMC1lYmE3LTExZWYtODQ1My0xYmVhN2Y1MDI4ZDciLCJuYW1lIjoi57K-576O55qE6I2U5p6dMDU4IiwidmlwIjowLCJqdGkiOiJMb1ZVeGNPNVgiLCJyZWdpc3RyYXRpb25faWQiOiIxNjFhMzc5N2M5Mzg4ZTZjOGY3IiwiaWF0IjoxNzM5NjM4NDg1LCJleHAiOjE3NDIyMzA0ODV9.if4kvP6nqx5ATnBY3GahdwJbYoMnhq0M5NuNaMaRCZ0', 
 );
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+
+
+
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_POST,1);
+curl_setopt($ch, CURLOPT_HTTPHEADER,$headers);
+curl_setopt($ch, CURLOPT_POSTFIELDS,$post);
 $data = curl_exec($ch);
 curl_close($ch);
-return $data;
+$json = json_decode($data);
+
+
+
+
 }
